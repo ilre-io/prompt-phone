@@ -1,9 +1,7 @@
-
 import React, { useState } from 'react';
 import { X, Edit, Trash2, Check, Copy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PromptItem } from '../types';
-import { CATEGORY_COLORS } from '../constants';
 
 interface PromptModalProps {
   item: PromptItem | null;
@@ -40,7 +38,6 @@ const PromptModal: React.FC<PromptModalProps> = ({ item, onClose, onEdit, onDele
           className="relative w-full bg-white bottom-sheet overflow-hidden flex flex-col max-h-[94vh] shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Handle bar */}
           <div className="w-full flex justify-center py-2 flex-none">
             <div className="w-10 h-1 bg-stone-200 rounded-full" />
           </div>
@@ -54,11 +51,16 @@ const PromptModal: React.FC<PromptModalProps> = ({ item, onClose, onEdit, onDele
             </div>
 
             {hasMedia && (
-              <div className="w-full bg-stone-50/30 flex items-center justify-center p-3 border-b border-stone-100">
-                {/* 改回 aspect-video 并设置最小高度，确保视频播放区域足够大 */}
-                <div className="relative w-full aspect-video min-h-[220px] rounded-xl overflow-hidden shadow-sm bg-black border border-stone-200">
+              <div className="w-full bg-black flex items-center justify-center border-b border-stone-100">
+                <div className="w-full aspect-video">
                   {isVideoContent ? (
-                    <video src={item.outputMediaUrl} className="w-full h-full object-contain" controls autoPlay muted />
+                    <video 
+                      src={item.outputMediaUrl} 
+                      className="w-full h-full object-contain" 
+                      controls 
+                      autoPlay 
+                      muted 
+                    />
                   ) : (
                     <img src={item.outputMediaUrl} className="w-full h-full object-contain" alt={item.title} />
                   )}
@@ -96,14 +98,14 @@ const PromptModal: React.FC<PromptModalProps> = ({ item, onClose, onEdit, onDele
                 )}
 
                 <div className="flex flex-wrap gap-1.5">
-                  {item.tags.map(tag => (
+                  {(item.tags || []).map(tag => (
                     <span key={tag} className="px-2.5 py-1 text-[10px] font-bold text-stone-500 bg-stone-100 rounded-lg">#{tag}</span>
                   ))}
                 </div>
 
                 <div className="pt-4 border-t border-stone-100 flex justify-end">
                    <button 
-                    onClick={(e) => { 
+                    onClick={() => { 
                       if (isDeleting) { 
                         onDelete(item.id); 
                         onClose(); 
@@ -112,7 +114,7 @@ const PromptModal: React.FC<PromptModalProps> = ({ item, onClose, onEdit, onDele
                         setTimeout(() => setIsDeleting(false), 3000); 
                       } 
                     }} 
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${isDeleting ? 'bg-red-500 text-white shadow-lg shadow-red-200' : 'text-stone-300'}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${isDeleting ? 'bg-red-500 text-white shadow-lg' : 'text-stone-300'}`}
                   >
                     <Trash2 size={14} /> {isDeleting ? '确定删除？' : '删除'}
                   </button>

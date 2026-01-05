@@ -142,7 +142,8 @@ const PromptFormModal: React.FC<PromptFormModalProps> = ({ isOpen, initialData, 
           {isMediaRequired && (
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">图片/视频参考</label>
-              <div className="h-32 rounded-2xl overflow-hidden bg-stone-50 border border-stone-200">
+              {/* 这里还原为更大面积的预览区域 */}
+              <div className="w-full aspect-video rounded-2xl overflow-hidden bg-stone-50 border border-stone-200">
                 <MediaUploader 
                   value={formData.outputMediaUrl || ''} 
                   onChange={val => setFormData({...formData, outputMediaUrl: val})} 
@@ -171,7 +172,7 @@ const PromptFormModal: React.FC<PromptFormModalProps> = ({ isOpen, initialData, 
             <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">核心提示词 (PROMPT)</label>
             <textarea 
               ref={promptRef} 
-              rows={12} 
+              rows={8} 
               className="w-full input-modern rounded-2xl px-4 py-4 text-stone-700 font-mono text-sm outline-none resize-none leading-relaxed border focus:border-stone-300" 
               placeholder="在此输入您的核心提示词..." 
             />

@@ -1,14 +1,10 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  LayoutGrid, Image as ImageIcon, Video, Wand2, Database, Search, 
-  Plus, Loader2, Settings, FileText, X, Save, Trash2, 
-  CheckCircle, AlertTriangle, Cloud, CloudOff, Lock, AlertCircle
+  Search, Plus, Loader2, Settings, Cloud, CloudOff
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 import { PromptItem } from './types';
-import { CATEGORIES, GENERAL_SUB_CATS, CATEGORY_COLORS, APP_CONFIG } from './constants';
+import { CATEGORIES, GENERAL_SUB_CATS, CATEGORY_COLORS } from './constants';
 import { localDB, cloudDB } from './services/db';
 import { formatBytes } from './utils';
 
@@ -34,7 +30,7 @@ const App: React.FC = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [confirmAction, setConfirmAction] = useState<{ title: string; message: string; action: () => Promise<void> } | null>(null);
   
-  const activeColor = CATEGORY_COLORS[activeCategory];
+  const activeColor = CATEGORY_COLORS[activeCategory] || CATEGORY_COLORS['txt2img'];
 
   useEffect(() => {
     loadData();
@@ -48,7 +44,7 @@ const App: React.FC = () => {
       setItems(storedItems);
       setStorageUsage(storedItems.reduce((acc, item) => acc + JSON.stringify(item).length, 0));
     } catch (error) {
-      console.error(error);
+      console.error("加载数据失败:", error);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +55,7 @@ const App: React.FC = () => {
     setStatusMessage('同步中...');
     cloudDB.syncToCloud()
       .then(result => {
-        setStatusMessage(result.message || `完成：上传 ${result.uploaded}，删除 ${result.deleted}`);
+        setStatusMessage(result.message || `同步成功`);
         loadData();
         setTimeout(() => { setSyncStatus(''); setStatusMessage(''); }, 3000);
       })
@@ -181,7 +177,7 @@ const App: React.FC = () => {
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20 text-stone-400">
             <Loader2 size={32} className="animate-spin mb-4 opacity-20" />
-            <p className="text-sm">加载数据库中...</p>
+            <p className="text-sm">加载中...</p>
           </div>
         ) : filteredItems.length > 0 ? (
           activeCategory === 'general' ? 
