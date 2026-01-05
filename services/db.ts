@@ -1,13 +1,12 @@
 
 import { openDB } from 'idb';
-import { PromptItem } from '../types';
-import { APP_CONFIG } from '../constants';
+import { PromptItem } from '../types.ts';
+import { APP_CONFIG } from '../constants.tsx';
 
 const DB_NAME = 'Ilre_Local_DB';
 const STORE_NAME = 'prompts';
 const DELETE_QUEUE_STORE = 'deleted_queue';
 
-// LocalDB class implementation
 export class LocalDB {
   async getDB() {
     return openDB(DB_NAME, 2, {
@@ -73,24 +72,23 @@ export class LocalDB {
 
 export const localDB = new LocalDB();
 
-// CloudDB class implementation
 export class CloudDB {
-  private client: any;
+  private _client: any = null;
 
-  constructor() {
-    this.client = null;
-    if (APP_CONFIG.url && APP_CONFIG.key) {
-      try {
-        // @ts-ignore
-        this.client = window.supabase.createClient(APP_CONFIG.url, APP_CONFIG.key);
-      } catch (e) { console.error("Config Error:", e); }
+  get client() {
+    if (this._client) return this._client;
+    // @ts-ignore
+    if (window.supabase && APP_CONFIG.url && APP_CONFIG.key) {
+      // @ts-ignore
+      this._client = window.supabase.createClient(APP_CONFIG.url, APP_CONFIG.key);
     }
+    return this._client;
   }
 
   get isConnected() { return !!this.client; }
 
   async testConnection() {
-    if (!this.isConnected) throw new Error("代码配置无效");
+    if (!this.isConnected) throw new Error("代码配置无效或 Supabase 尚未加载");
     const { error } = await this.client.from('prompts').select('id').limit(1);
     if (error && error.code !== 'PGRST116') throw error;
     return true;

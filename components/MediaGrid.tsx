@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PromptItem } from '../types';
-import { CATEGORY_COLORS } from '../constants';
+import { PromptItem } from '../types.ts';
+import { CATEGORY_COLORS } from '../constants.tsx';
 
 const MediaGridItem: React.FC<{ item: PromptItem; onSelect: (item: PromptItem) => void }> = ({ item, onSelect }) => { 
-  const colors = CATEGORY_COLORS[item.category] || CATEGORY_COLORS['general'];
+  const colors = CATEGORY_COLORS[item.category] || CATEGORY_COLORS['general'] || CATEGORY_COLORS['txt2img'];
   const isRealVideo = item.isVideo || (item.outputMediaUrl && (item.outputMediaUrl.startsWith('data:video') || item.outputMediaUrl.match(/\.(mp4|webm|ogg|mov|mkv)$/i)));
   const firstTag = item.tags && item.tags.length > 0 ? item.tags[0] : null;
 

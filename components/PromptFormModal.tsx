@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Save, Database, Loader2, ChevronLeft } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PromptItem } from '../types';
-import { CATEGORIES, GENERAL_SUB_CATS } from '../constants';
-import MediaUploader from './MediaUploader';
+import { ChevronLeft, Loader2, Save } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { PromptItem } from '../types.ts';
+import { CATEGORIES, GENERAL_SUB_CATS } from '../constants.tsx';
+import MediaUploader from './MediaUploader.tsx';
 
 interface PromptFormModalProps {
   isOpen: boolean;
@@ -142,7 +142,6 @@ const PromptFormModal: React.FC<PromptFormModalProps> = ({ isOpen, initialData, 
           {isMediaRequired && (
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">图片/视频参考</label>
-              {/* 这里还原为更大面积的预览区域 */}
               <div className="w-full aspect-video rounded-2xl overflow-hidden bg-stone-50 border border-stone-200">
                 <MediaUploader 
                   value={formData.outputMediaUrl || ''} 

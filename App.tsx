@@ -1,19 +1,20 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Search, Plus, Loader2, Settings, Cloud, CloudOff
 } from 'lucide-react';
 
-import { PromptItem } from './types';
-import { CATEGORIES, GENERAL_SUB_CATS, CATEGORY_COLORS } from './constants';
-import { localDB, cloudDB } from './services/db';
-import { formatBytes } from './utils';
+import { PromptItem } from './types.ts';
+import { CATEGORIES, GENERAL_SUB_CATS, CATEGORY_COLORS } from './constants.tsx';
+import { localDB, cloudDB } from './services/db.ts';
+import { formatBytes } from './utils.ts';
 
-import TextGrid from './components/TextGrid';
-import MediaGrid from './components/MediaGrid';
-import PromptModal from './components/PromptModal';
-import PromptFormModal from './components/PromptFormModal';
-import SettingsModal from './components/SettingsModal';
-import ConfirmModal from './components/ConfirmModal';
+import TextGrid from './components/TextGrid.tsx';
+import MediaGrid from './components/MediaGrid.tsx';
+import PromptModal from './components/PromptModal.tsx';
+import PromptFormModal from './components/PromptFormModal.tsx';
+import SettingsModal from './components/SettingsModal.tsx';
+import ConfirmModal from './components/ConfirmModal.tsx';
 
 const App: React.FC = () => {
   const [items, setItems] = useState<PromptItem[]>([]);

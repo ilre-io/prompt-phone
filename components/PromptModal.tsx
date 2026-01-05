@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { X, Edit, Trash2, Check, Copy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PromptItem } from '../types';
+import { PromptItem } from '../types.ts';
 
 interface PromptModalProps {
   item: PromptItem | null;

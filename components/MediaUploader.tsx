@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload as IconUpload, Trash2 } from 'lucide-react';
-import { formatBytes, compressImage } from '../utils';
+import { formatBytes, compressImage } from '../utils.ts';
 
 interface MediaUploaderProps {
   value: string;
@@ -61,5 +61,4 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({ value, onChange, accept, 
   );
 };
 
-// Fix: Added missing default export for MediaUploader component
 export default MediaUploader;

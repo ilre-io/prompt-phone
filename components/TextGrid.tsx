@@ -1,16 +1,15 @@
 
 import React from 'react';
-import { Maximize2, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { PromptItem } from '../types';
-import { CATEGORY_COLORS, GENERAL_SUB_CATS } from '../constants';
+import { PromptItem } from '../types.ts';
+import { CATEGORY_COLORS, GENERAL_SUB_CATS } from '../constants.tsx';
 
 const TextGridItem: React.FC<{ item: PromptItem; onSelect: (item: PromptItem) => void }> = ({ item, onSelect }) => { 
-  const colors = CATEGORY_COLORS[item.category] || CATEGORY_COLORS['general']; 
+  const colors = CATEGORY_COLORS[item.category] || CATEGORY_COLORS['general'] || CATEGORY_COLORS['txt2img']; 
   let subCatInfo = null;
   
   if (item.category === 'general') {
-    // 逻辑改进：同时检查当前 label 和旧的 label
     subCatInfo = GENERAL_SUB_CATS.find(sc => {
       if (sc.id === 'all') return false;
       const hasNewLabel = item.tags && item.tags.includes(sc.label);
